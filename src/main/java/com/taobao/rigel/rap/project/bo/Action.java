@@ -9,6 +9,8 @@ public class Action implements java.io.Serializable {
     private int id;
     private int disableCache;
     private String name;
+    private String person;
+    private String version;
     private String description;
     private String requestType = "1";
     private String requestUrl;
@@ -28,6 +30,8 @@ public class Action implements java.io.Serializable {
             obj.setRemarks((String) row.get("remarks"));
             obj.setRequestType((String) row.get("request_type"));
             obj.setRequestUrl((String) row.get("request_url"));
+            obj.setPerson((String) row.get("person"));
+            obj.setVersion((String) row.get("version"));
             list.add(obj);
         }
         return list;
@@ -56,8 +60,24 @@ public class Action implements java.io.Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getPerson() {
+		return person;
+	}
 
-    public String getDescription() {
+	public void setPerson(String person) {
+		this.person = person;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getDescription() {
         return description;
     }
 
@@ -157,6 +177,8 @@ public class Action implements java.io.Serializable {
     public void update(Action action) {
         setDescription(action.getDescription());
         setName(action.getName());
+        setPerson(action.getPerson());
+        setVersion(action.getVersion());
         setRequestType(action.getRequestType());
         setRequestUrl(action.getRequestUrl());
         setResponseTemplate(action.getResponseTemplate());
@@ -167,6 +189,10 @@ public class Action implements java.io.Serializable {
 
         stringBuilder.append("{\"id\":" + getId() + ",");
         stringBuilder.append("\"name\":\"" + StringUtils.escapeInJ(getName())
+                + "\",");
+        stringBuilder.append("\"person\":\"" + StringUtils.escapeInJ(getPerson())
+                + "\",");
+        stringBuilder.append("\"version\":\"" + StringUtils.escapeInJ(getVersion())
                 + "\",");
         stringBuilder.append("\"description\":\""
                 + StringUtils.escapeInJ(getDescription()) + "\",");
@@ -199,6 +225,7 @@ public class Action implements java.io.Serializable {
             }
         }
         stringBuilder.append("]}");
+        System.out.println(stringBuilder.toString());
         return stringBuilder.toString();
     }
 

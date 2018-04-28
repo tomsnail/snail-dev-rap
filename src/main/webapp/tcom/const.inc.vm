@@ -76,7 +76,8 @@
     "teamLog":"$!projectContext/platform/teamLog.do"
 })
 #set($testerUrl = {
-    "pageTester":"$projectContext/tester/pageTester.do"
+    "pageTester":"$projectContext/tester/pageTester.do",
+     "pageHttpTester":"$projectContext/tester/pageHttpTester.do"
 })
 #set($teamUrl = {
     "teams" : "$projectContext/org/team/teams.do",

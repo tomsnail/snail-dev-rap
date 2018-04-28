@@ -139,7 +139,7 @@
     <div id="div-add-p-mt-list-container" style="display:none">
         <div id="div-add-p" style="display: none"><a href="#" class="btn btn-info btn-xs"
                                                      onclick="ws.addP(); return false;"><i
-                class="glyphicon glyphicon-plus" style="margin-right: 5px"></i>添加页面</a></div>
+                class="glyphicon glyphicon-plus" style="margin-right: 5px"></i>添加</a></div>
         <div id="div-mt-list" class="clearfix"></div>
     </div>
 
@@ -235,6 +235,18 @@
                 </td>
             </tr>
             <tr>
+                <td class="title">负责人</td>
+                <td class="input">
+                    <input type="text" id="editAFloater-person" minLen="1" message="负责人不能为空" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">版本</td>
+                <td class="input">
+                    <input type="text" id="editAFloater-version" minLen="1" message="版本不能为空" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
                 <td class="title">请求类型</td>
                 <td class="radio-list clearfix">
                     <input type="radio" id="editAFloater-type-1" name="editAFloater-type" value="1"/>
@@ -294,7 +306,7 @@
 </form>
 #endFloater
 
-#startFloater("editPFloater" "编辑页面" 600 400)
+#startFloater("editPFloater" "编辑" 600 400)
 <form name="formEditPFloater">
     <div class="myfloater">
         <input type="hidden" id="editPFloater-id"/>
@@ -536,6 +548,7 @@
             "queryVersion": "$workspaceUrl.queryVersion",
             "switchVersion": "$workspaceUrl.switchVersion",
             "pageTester": "$testerUrl.pageTester",
+            "pageHttpTester": "$testerUrl.pageHttpTester",
             "updateReleatedIds": "$projectUrl.updateReleatedIds",
             "myWorkspace": "$workspaceUrl.myWorkspace",
             "queryMockData": "$mockUrl.queryMockData",

@@ -301,7 +301,6 @@ public class WorkspaceAction extends ActionBase {
                 setErrMsg(ACCESS_DENY);
                 return JSON_ERROR;
             }
-
             Workspace workspace = new Workspace();
             workspace.setProject(p);
 

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+    #parse('/tcom/template.rap.vm')
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>RAP - $!utils.escapeInH($page.name)控制台</title>
+    <link rel="shortcut icon" href="${staticRoot}/img/favicon.ico">
+
+    #includeNewRapStatic
+    <link type="text/css" rel="stylesheet" href="${staticRoot}/css/pageTester.css?_r=$!timeStamp"/>
+    <script src="http://a.tbcdn.cn/??s/yui/3.6.0/build/yui/yui-min.js"></script>
+    <script src="${staticRoot}/js/util/jsformat.js"></script>
+    <script src="${staticRoot}/js/util/structureValidator.js"></script>
+    <script src="${staticRoot}/js/util/mock-min.js"></script>
+</head>
+<body>
+#bodyNewStart
+<div class="container">
+    <h3>
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
+        HTTP测试台
+    </h3>
+
+   
+    <div id="divActionList" class="demo tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            #foreach($action in $page.actionList)
+                <li#if($velocityCount==1) class="active"#end>
+                    <a href="#action${action.id}" role="tab" data-toggle="tab">$utils.escapeInH($action.name)</a>
+                </li>
+            #end
+        </ul>
+        <div class="tab-content">
+           <div class="tab-pane active" id="action0">
+                    <form name="httpTest" class="form" method="post"
+                          path="" onsubmit="return false;">
+                        <input type="hidden" name="paramIdList" class="paramIdList"
+                               value="$!utils.escapeInH($action.remarks)"/>
+
+                        <div class="p8">
+                            <div style="margin-top:5px;">请求地址: 
+                            	<input name="httpUrl" class="paramIdList"/>
+                            	<input type="button" class="btn btn-primary btn-run" value="请求"/>
+                            	<div class="block" id="divResBoard">
+    								<textarea id="reqStr">HTTP Request</textarea>
+        							<div class="clear"></div>
+    							</div>
+                             </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+
+    <div class="block" id="divResBoard">
+        <div id="divResBoardJson">HTTP Response</div>
+        <div class="clear"></div>
+    </div>
+    <script>
+        var RAP_ROOT = '$consts.DOMAIN_URL$!projectContext/mockjs/$!projectId';
+        document.getElementById("txtRootPath").value = RAP_ROOT;
+        var PROJECT_ID = $!projectId;
+    </script>
+    <script src="./pageTester.js"></script>
+</div>
+#bodyEnd
+<foot>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_5879641'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D5879641%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+</foot>
+</body>
+</html>

@@ -640,6 +640,8 @@ function deepCopy(o) {
         if (action !== null) {
             action.name = obj.name;
             action.requestType = obj.requestType;
+            action.version = obj.version;
+            action.person = obj.person;
             action.requestUrl = obj.requestUrl;
             action.responseTemplate = obj.responseTemplate;
             action.description = obj.description;
@@ -2146,6 +2148,8 @@ function deepCopy(o) {
         initEditAFloater();
         b.g("editAFloater-id").value = action.id;
         b.g("editAFloater-name").value = action.name;
+        b.g("editAFloater-person").value = action.person;
+        b.g("editAFloater-version").value = action.version;
         setSelectedValue("editAFloater-type", action.requestType);
         var struct = getActionStruct(action);
         setSelectedValue("editAFloater-struct", struct);
@@ -2192,7 +2196,7 @@ function deepCopy(o) {
      */
     ws.addP = function() {
         initEditPFloater();
-        e.get("editPFloater").setTitle("模型管理 - 添加新页面");
+        e.get("editPFloater").setTitle("模型管理 - 添加新功能");
         ecFloater.show("editPFloater");
     };
 
@@ -2204,6 +2208,8 @@ function deepCopy(o) {
         var action = {};
         action.id = b.g("editAFloater-id").value - 0;
         action.name = b.g("editAFloater-name").value;
+        action.person = b.g("editAFloater-person").value;
+        action.version = b.g("editAFloater-version").value;
         action.requestType = getSelectedValue("editAFloater-type");
         action.requestUrl = b.g("editAFloater-requestUrl").value;
         action.responseTemplate = b.g("editAFloater-responseTemplate").value;
@@ -2229,6 +2235,8 @@ function deepCopy(o) {
         var action = {};
         action.pageId = b.g("editAFloater-pageId").value - 0;
         action.name = b.g("editAFloater-name").value;
+        action.person = b.g("editAFloater-person").value;
+        action.version = b.g("editAFloater-version").value;
         action.requestType = getSelectedValue("editAFloater-type");
         action.requestUrl = b.g("editAFloater-requestUrl").value;
         action.responseTemplate = b.g("editAFloater-responseTemplate").value;
@@ -3446,6 +3454,8 @@ function deepCopy(o) {
     function initEditAFloater() {
         b.g("editAFloater-id").value = "";
         b.g("editAFloater-name").value = "";
+        b.g("editAFloater-person").value = "";
+        b.g("editAFloater-version").value = "";
         b.g("editAFloater-requestUrl").value = "";
         b.g("editAFloater-responseTemplate").value = "";
         b.g("editAFloater-description").value = "";
@@ -4041,7 +4051,9 @@ function deepCopy(o) {
         function getAInfoHtml(a) {
             var head = "<h2 style='margin-top:20px;'>接口详情 <span style='font-size: 14px; color: #999;'>(id: " + a.id 
                 + ") &nbsp;&nbsp;&nbsp;&nbsp;<button class=\"btn btn-danger btn-xs\" onclick=\"ws.showMockData(" 
-                + a.id + ");\">Mock数据</button></span> </h2><div class='action-info' href='#' onclick='ws.editA(" 
+                + a.id + ");\">Mock数据</button> &nbsp;&nbsp;&nbsp;&nbsp;<button class=\"btn btn-danger btn-xs\" onclick=\"window.open('" 
+                + URL.pageHttpTester + '?id=' + a.id + "');\">HTTP测试</button>"
+                + "</span> </h2><div class='action-info' href='#' onclick='ws.editA(" 
                 + a.id + "); return false;'>",
                 body = "",
                 foot = "</div>";
@@ -4049,6 +4061,13 @@ function deepCopy(o) {
             if (a.name) {
                 body += "<div class='item'><b>接口名称 </b>" + a.name + "</div>";
             }
+            if (a.person) {
+                body += "<div class='item'><b>负责人 </b>" + a.person + "</div>";
+            }
+            if (a.version) {
+            	body += "<div class='item'><b>版本 </b>" + a.version + "</div>";
+            }
+            
             if (a.requestType) {
                 body += "<div class='item'><b>请求类型 </b><font color='orange'>" + getRequestTypeStr(a.requestType) + "</font></div>";
             }

@@ -11,6 +11,12 @@
         <property name="name">
             <column name="name"/>
         </property>
+        <property name="version">
+            <column name="version"/>
+        </property>
+        <property name="person">
+            <column name="person"/>
+        </property>
         <property name="description">
             <column name="description"/>
         </property>

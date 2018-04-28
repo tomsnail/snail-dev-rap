@@ -237,6 +237,8 @@ CREATE TABLE tb_action
   id                INT(10) AUTO_INCREMENT NOT NULL
     PRIMARY KEY,
   name              VARCHAR(256)           NOT NULL,
+  person            VARCHAR(256)           NULL,
+  version           VARCHAR(256)           NULL,
   description       TEXT                   NULL,
 
   /* request block */
