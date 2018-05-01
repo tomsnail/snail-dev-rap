@@ -2,6 +2,7 @@ package com.taobao.rigel.rap.project.service;
 
 import com.taobao.rigel.rap.account.bo.User;
 import com.taobao.rigel.rap.project.bo.Action;
+import com.taobao.rigel.rap.project.bo.ActionHttp;
 import com.taobao.rigel.rap.project.bo.Module;
 import com.taobao.rigel.rap.project.bo.Page;
 import com.taobao.rigel.rap.project.bo.Project;
@@ -223,5 +224,9 @@ public interface ProjectMgr {
      * @return
      */
     List<Integer> getMemberIdsOfProject(int projectId);
+    
+    ActionHttp getActionHttp(int actionId);
+    
+    int saveOrUpdateActionHttp(ActionHttp actionHttp,String type);
 
 }

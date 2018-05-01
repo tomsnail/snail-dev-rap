@@ -9,6 +9,7 @@ public class Action implements java.io.Serializable {
     private int id;
     private int disableCache;
     private String name;
+    private String state;
     private String person;
     private String version;
     private String description;
@@ -32,6 +33,7 @@ public class Action implements java.io.Serializable {
             obj.setRequestUrl((String) row.get("request_url"));
             obj.setPerson((String) row.get("person"));
             obj.setVersion((String) row.get("version"));
+            obj.setState((String)row.get("state"));
             list.add(obj);
         }
         return list;
@@ -67,6 +69,15 @@ public class Action implements java.io.Serializable {
 
 	public void setPerson(String person) {
 		this.person = person;
+	}
+	
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getVersion() {
@@ -179,6 +190,7 @@ public class Action implements java.io.Serializable {
         setName(action.getName());
         setPerson(action.getPerson());
         setVersion(action.getVersion());
+        setState(action.getState());
         setRequestType(action.getRequestType());
         setRequestUrl(action.getRequestUrl());
         setResponseTemplate(action.getResponseTemplate());
@@ -192,6 +204,8 @@ public class Action implements java.io.Serializable {
                 + "\",");
         stringBuilder.append("\"person\":\"" + StringUtils.escapeInJ(getPerson())
                 + "\",");
+        stringBuilder.append("\"state\":\"" + StringUtils.escapeInJ(getState())
+        + "\",");
         stringBuilder.append("\"version\":\"" + StringUtils.escapeInJ(getVersion())
                 + "\",");
         stringBuilder.append("\"description\":\""
@@ -225,7 +239,6 @@ public class Action implements java.io.Serializable {
             }
         }
         stringBuilder.append("]}");
-        System.out.println(stringBuilder.toString());
         return stringBuilder.toString();
     }
 

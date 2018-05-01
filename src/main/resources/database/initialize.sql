@@ -237,6 +237,7 @@ CREATE TABLE tb_action
   id                INT(10) AUTO_INCREMENT NOT NULL
     PRIMARY KEY,
   name              VARCHAR(256)           NOT NULL,
+  state				VARCHAR(20)			   NULL,
   person            VARCHAR(256)           NULL,
   version           VARCHAR(256)           NULL,
   description       TEXT                   NULL,
@@ -255,6 +256,19 @@ CREATE TABLE tb_action
   response_template TEXT                   NULL
   COMMENT '响应模板地址, 暂时弃用。 response template address, temply deprecated.'
 
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+  
+  
+ CREATE TABLE tb_action_http_test
+(
+  id                INT(10) AUTO_INCREMENT NOT NULL
+    PRIMARY KEY,
+  action_id         INT(10)                NOT NULL,
+  request_context	TEXT		   		   NULL,
+  response_context  TEXT                   NULL,
+  request_url       TEXT                   NULL
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

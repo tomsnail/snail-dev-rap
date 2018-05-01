@@ -7,6 +7,8 @@ import com.taobao.rigel.rap.auto.generate.contract.Generator;
 import com.taobao.rigel.rap.common.base.ActionBase;
 import com.taobao.rigel.rap.common.bo.RapError;
 import com.taobao.rigel.rap.organization.service.OrganizationMgr;
+import com.taobao.rigel.rap.project.bo.Action;
+import com.taobao.rigel.rap.project.bo.ActionHttp;
 import com.taobao.rigel.rap.project.bo.Page;
 import com.taobao.rigel.rap.project.bo.Project;
 import com.taobao.rigel.rap.project.service.ProjectMgr;
@@ -41,6 +43,7 @@ public class ProjectAction extends ActionBase {
     private String projectData;
     private String result;
     private InputStream outputStream;
+    
 
     public OrganizationMgr getOrganizationMgr() {
         return organizationMgr;
@@ -387,5 +390,10 @@ public class ProjectAction extends ActionBase {
         setJson(gson.toJson(list));
         return SUCCESS;
     }
+    
+    
+
+	
+	
 
 }

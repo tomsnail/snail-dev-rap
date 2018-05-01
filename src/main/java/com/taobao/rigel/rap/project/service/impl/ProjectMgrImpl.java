@@ -20,6 +20,9 @@ import com.taobao.rigel.rap.workspace.dao.WorkspaceDao;
 import sun.misc.Cache;
 
 import javax.management.Query;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class ProjectMgrImpl implements ProjectMgr {
@@ -467,6 +470,68 @@ public class ProjectMgrImpl implements ProjectMgr {
             }
         }
     }
+
+	@Override
+	public ActionHttp getActionHttp(int actionId) {
+		ActionHttp actionHttp =  projectDao.getActionHttp(actionId);
+		if(actionHttp==null){
+			actionHttp = new ActionHttp();
+			Action action = projectDao.getAction(actionId);
+			if(action!=null){
+				actionHttp.setActionId(actionId);
+				actionHttp.setRequestUrl(action.getRequestUrl());
+				Map<String,Object> reqMap = new HashMap<String,Object>();
+				reqMap.put("body", "");
+				reqMap.put("command", "");
+				reqMap.put("version", action.getVersion());
+				reqMap.put("timestrap", "");
+				reqMap.put("sequenceID", "");
+				reqMap.put("fingerprint", "");
+				reqMap.put("key", "");
+				reqMap.put("uri", action.getRequestUrl());
+				actionHttp.setRequestContext(new Gson().toJson(reqMap));
+				Map<String,Object> resMap = new HashMap<String,Object>();
+				resMap.put("command", "");
+				resMap.put("sequenceID", "");
+				resMap.put("fingerprint", "");
+				resMap.put("body", "");
+				resMap.put("status", "0");
+				resMap.put("msg", "");
+				resMap.put("code", "");
+				resMap.put("msgCode", "");
+				resMap.put("errorMsg", "");
+				actionHttp.setResponseContext(new Gson().toJson(resMap));
+				projectDao.saveOrUpdateActionHttp(actionHttp);
+				actionHttp =  projectDao.getActionHttp(actionId);
+			}
+		}
+		if(actionHttp==null){
+			actionHttp = new ActionHttp();
+		}
+		return actionHttp;
+	}
+
+	@Override
+	public int saveOrUpdateActionHttp(ActionHttp actionHttp,String type) {
+		if(actionHttp==null||StringUtils.isBlank(type)){
+			return 0;
+		}
+		ActionHttp _actionHttp =  projectDao.getActionHttp(actionHttp.getActionId());
+		if(_actionHttp==null){
+			return 0;
+		}
+		if(type.equals("url")||type.equals("all")){
+			_actionHttp.setRequestUrl(actionHttp.getRequestUrl());
+		}
+		if(type.equals("req")||type.equals("all")){
+			_actionHttp.setRequestContext(actionHttp.getRequestContext());
+		}
+		if(type.equals("res")||type.equals("all")){
+			_actionHttp.setResponseContext(actionHttp.getResponseContext());
+		}
+		
+		return projectDao.saveOrUpdateActionHttp(_actionHttp);
+	}
 
 
 }

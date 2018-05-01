@@ -22,6 +22,27 @@
                 class="com.taobao.rigel.rap.tester.web.action.TesterAction" method="test">
             <result name="success" type="velocity">/bcom/content.cb.vm</result>
         </action>
+        
+        <action name="getActionHttpInfo"
+                class="com.taobao.rigel.rap.tester.web.action.TesterAction" method="getActionHttpInfo">
+            <result name="success" type="velocity">/tester/pageHttpTester.vm</result>
+        </action>
+        
+         <action name="saveOrUpdateActionHttp"
+                class="com.taobao.rigel.rap.tester.web.action.TesterAction" method="saveOrUpdateActionHttp">
+            <result name="success" type="velocity">/tester/pageHttpTester.vm</result>
+        </action>
+        
+        <action name="httptest"
+                class="com.taobao.rigel.rap.tester.web.action.TesterAction" method="httptest">
+            <result name="success" type="velocity">/bcom/json.cb.vm</result>
+        </action>
+        
+        <action name="jsJsonFormat"
+                class="com.taobao.rigel.rap.tester.web.action.TesterAction" method="jsJsonFormat">
+            <result name="success" type="velocity">/bcom/json.cb.vm</result>
+        </action>
+        
     </package>
 
 </struts>

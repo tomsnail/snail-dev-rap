@@ -139,7 +139,7 @@
     <div id="div-add-p-mt-list-container" style="display:none">
         <div id="div-add-p" style="display: none"><a href="#" class="btn btn-info btn-xs"
                                                      onclick="ws.addP(); return false;"><i
-                class="glyphicon glyphicon-plus" style="margin-right: 5px"></i>添加</a></div>
+                class="glyphicon glyphicon-plus" style="margin-right: 5px"></i>添加新接口</a></div>
         <div id="div-mt-list" class="clearfix"></div>
     </div>
 
@@ -229,9 +229,9 @@
         <input type="hidden" id="editAFloater-pageId"/>
         <table>
             <tr>
-                <td class="title">名称</td>
+                <td class="title">接口名称</td>
                 <td class="input">
-                    <input type="text" id="editAFloater-name" minLen="1" message="请求名称不能为空" maxlength="50"/>
+                    <input type="text" id="editAFloater-name" minLen="1" message="请求名称不能为空" maxlength="50" disabled="disabled"/>
                 </td>
             </tr>
             <tr>
@@ -244,6 +244,19 @@
                 <td class="title">版本</td>
                 <td class="input">
                     <input type="text" id="editAFloater-version" minLen="1" message="版本不能为空" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">状态</td>
+                <td class="radio-list clearfix">
+                    <input type="radio" id="editAFloater-state-1" name="editAFloater-state" value="正常"/>
+                    <label for="editAFloater-type-1">正常</label>
+                    <input type="radio" id="editAFloater-state-2" name="editAFloater-state" value="废除"/>
+                    <label for="editAFloater-type-2">废除</label>
+                    <input type="radio" id="editAFloater-state-3" name="editAFloater-state" value="调试"/>
+                    <label for="editAFloater-type-3">调试</label>
+                    <input type="radio" id="editAFloater-state-4" name="editAFloater-state" value="预览"/>
+                    <label for="editAFloater-type-4">预览</label>
                 </td>
             </tr>
             <tr>
@@ -571,13 +584,13 @@
                 "introduction": "",
                 "pageList": [{
                     "moduleId": ws.generateId(),
-                    "name": "某页面",
+                    "name": "某接口",
                     "introduction": "",
                     "id": ws.generateId(),
                     "isIdGenerated": true,
                     "actionList": [{
                         "pageId": ws.generateId(),
-                        "name": "某请求",
+                        "name": "某版本",
                         "requestType": "1",
                         "requestUrl": "",
                         "responseTemplate": "",

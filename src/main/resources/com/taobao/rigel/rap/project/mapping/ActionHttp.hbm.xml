@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.taobao.rigel.rap.project.bo.ActionHttp" table="tb_action_http_test">
+        <id name="id">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="requestUrl">
+            <column name="request_url"/>
+        </property>
+        <property name="actionId">
+            <column name="action_id"/>
+        </property>
+        <property name="requestContext">
+            <column name="request_context"/>
+        </property>
+        <property name="responseContext">
+            <column name="response_context"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

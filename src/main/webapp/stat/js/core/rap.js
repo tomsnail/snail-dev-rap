@@ -642,6 +642,7 @@ function deepCopy(o) {
             action.requestType = obj.requestType;
             action.version = obj.version;
             action.person = obj.person;
+            action.state = obj.state;
             action.requestUrl = obj.requestUrl;
             action.responseTemplate = obj.responseTemplate;
             action.description = obj.description;
@@ -2151,6 +2152,7 @@ function deepCopy(o) {
         b.g("editAFloater-person").value = action.person;
         b.g("editAFloater-version").value = action.version;
         setSelectedValue("editAFloater-type", action.requestType);
+        setSelectedValue("editAFloater-state", action.state);
         var struct = getActionStruct(action);
         setSelectedValue("editAFloater-struct", struct);
         // hide action struct in description textarea
@@ -2163,7 +2165,7 @@ function deepCopy(o) {
         b.g("editAFloater-requestUrl").value = action.requestUrl;
         b.g("editAFloater-responseTemplate").value = action.responseTemplate;
         b.g("editAFloater-description").value = desc;
-        e.get("editAFloater").setTitle("模型管理 - 编辑请求");
+        e.get("editAFloater").setTitle("模型管理 - 编辑版本");
         ecFloater.show("editAFloater");
     };
 
@@ -2177,17 +2179,18 @@ function deepCopy(o) {
         b.g("editPFloater-id").value = page.id;
         b.g("editPFloater-name").value = page.name;
         b.g("editPFloater-introduction").value = page.introduction;
-        e.get("editAFloater").setTitle("模型管理 - 编辑页面");
+        e.get("editAFloater").setTitle("模型管理 - 编辑版本");
         ecFloater.show("editPFloater");
     };
 
     /**
      * add action
      */
-    ws.addA = function(pageId) {
+    ws.addA = function(pageId,pageName) {
         initEditAFloater();
         b.g("editAFloater-pageId").value = pageId;
-        e.get("editAFloater").setTitle("模型管理 - 添加新请求");
+        b.g("editAFloater-name").value = pageName;
+        e.get("editAFloater").setTitle("模型管理 - 添加新版本");
         ecFloater.show("editAFloater");
     };
 
@@ -2196,7 +2199,7 @@ function deepCopy(o) {
      */
     ws.addP = function() {
         initEditPFloater();
-        e.get("editPFloater").setTitle("模型管理 - 添加新功能");
+        e.get("editPFloater").setTitle("模型管理 - 添加新接口");
         ecFloater.show("editPFloater");
     };
 
@@ -2209,6 +2212,7 @@ function deepCopy(o) {
         action.id = b.g("editAFloater-id").value - 0;
         action.name = b.g("editAFloater-name").value;
         action.person = b.g("editAFloater-person").value;
+        action.state = getSelectedValue("editAFloater-state");
         action.version = b.g("editAFloater-version").value;
         action.requestType = getSelectedValue("editAFloater-type");
         action.requestUrl = b.g("editAFloater-requestUrl").value;
@@ -2236,6 +2240,7 @@ function deepCopy(o) {
         action.pageId = b.g("editAFloater-pageId").value - 0;
         action.name = b.g("editAFloater-name").value;
         action.person = b.g("editAFloater-person").value;
+        action.state = getSelectedValue("editAFloater-state");
         action.version = b.g("editAFloater-version").value;
         action.requestType = getSelectedValue("editAFloater-type");
         action.requestUrl = b.g("editAFloater-requestUrl").value;
@@ -2365,7 +2370,7 @@ function deepCopy(o) {
                 if (obj.isOk) {
                     storeViewState();
                     if (obj.projectData.moduleList.length === 0) {
-                        obj.projectData.moduleList = [{"id":ws.generateId(),"name":"某模块（点击编辑后双击修改）","introduction":"","pageList":[{"moduleId":ws.generateId(),"name":"某页面","introduction":"","id":ws.generateId(),"isIdGenerated":true,"actionList":[{"pageId":ws.generateId(),"name":"某请求","requestType":"1","requestUrl":"","responseTemplate":"","description":"","id":ws.generateId(),"requestParameterList":[{"id":ws.generateId(),"identifier":"reqParam","name":"某请求参数","remark":"","validator":"","dataType":"number","parameterList":[]}],"responseParameterList":[{"id":ws.generateId(),"identifier":"resParam","name":"某响应参数","remark":"","validator":"","dataType":"number","parameterList":[]}]}]}]}];
+                        obj.projectData.moduleList = [{"id":ws.generateId(),"name":"某模块（点击编辑后双击修改）","introduction":"","pageList":[{"moduleId":ws.generateId(),"name":"某接口","introduction":"","id":ws.generateId(),"isIdGenerated":true,"actionList":[{"pageId":ws.generateId(),"name":"某版本","requestType":"1","requestUrl":"","responseTemplate":"","description":"","id":ws.generateId(),"requestParameterList":[{"id":ws.generateId(),"identifier":"reqParam","name":"某请求参数","remark":"","validator":"","dataType":"number","parameterList":[]}],"responseParameterList":[{"id":ws.generateId(),"identifier":"resParam","name":"某响应参数","remark":"","validator":"","dataType":"number","parameterList":[]}]}]}]}];
                     }
                     if (_draftData) {
                         obj = JSON.parse(_draftData);
@@ -3461,6 +3466,7 @@ function deepCopy(o) {
         b.g("editAFloater-description").value = "";
         b.g("editAFloater-pageId").value = "";
         initRadioList("editAFloater-type");
+        initRadioList("editAFloater-state");
         initRadioList("editAFloater-struct");
     }
 
@@ -3935,7 +3941,7 @@ function deepCopy(o) {
                 for (var j = 0; j < actionListNum; j++) {
                     var action = actionList[j];
                     str += "<div id=\"div-a-tree-node-" + action.id + "\">" + "<a href=\"#\" onclick=\"ws.switchA(" + action.id +
-                        "); return false;\" ondblclick=\"ws.editA(" + action.id + "); return false;\">" + util.escaper.escapeInH(action.name) + "</a>";
+                        "); return false;\" ondblclick=\"ws.editA(" + action.id + "); return false;\">" + util.escaper.escapeInH(action.version) + "</a>";
                     if (_isEditMode) {
                         str += "<a href=\"#\" class=\"edit-link\" onclick=\"ws.editA(" +
                             action.id + "); return false;\"><i class=\"glyphicon glyphicon-pencil\"></i><a href=\"#\" onclick=\"ws.removeA(" +
@@ -3944,7 +3950,7 @@ function deepCopy(o) {
                     str += "</div>";
                 }
                 if (_isEditMode) {
-                    str += "<div style='margin-top:10px'><a class=\"btn btn-info btn-xs\" href=\"#\" onclick=\"ws.addA(" + page.id + "); return false;\"><i class=\"glyphicon glyphicon-plus\" style='margin-right: 5px;'></i>添加接口</a></div>";
+                    str += "<div style='margin-top:10px'><a class=\"btn btn-info btn-xs\" href=\"#\" onclick=\"ws.addA('" + page.id + "','"+page.name+"'); return false;\"><i class=\"glyphicon glyphicon-plus\" style='margin-right: 5px;'></i>添加版本</a></div>";
                 }
                 str += "</div>";
             }
@@ -4052,7 +4058,7 @@ function deepCopy(o) {
             var head = "<h2 style='margin-top:20px;'>接口详情 <span style='font-size: 14px; color: #999;'>(id: " + a.id 
                 + ") &nbsp;&nbsp;&nbsp;&nbsp;<button class=\"btn btn-danger btn-xs\" onclick=\"ws.showMockData(" 
                 + a.id + ");\">Mock数据</button> &nbsp;&nbsp;&nbsp;&nbsp;<button class=\"btn btn-danger btn-xs\" onclick=\"window.open('" 
-                + URL.pageHttpTester + '?id=' + a.id + "');\">HTTP测试</button>"
+                + URL.pageHttpTester + '?actionId=' + a.id + "');\">HTTP测试</button>"
                 + "</span> </h2><div class='action-info' href='#' onclick='ws.editA(" 
                 + a.id + "); return false;'>",
                 body = "",
@@ -4063,6 +4069,9 @@ function deepCopy(o) {
             }
             if (a.person) {
                 body += "<div class='item'><b>负责人 </b>" + a.person + "</div>";
+            }
+            if (a.state) {
+                body += "<div class='item'><b>状态 </b>" + a.state + "</div>";
             }
             if (a.version) {
             	body += "<div class='item'><b>版本 </b>" + a.version + "</div>";

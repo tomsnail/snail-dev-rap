@@ -579,4 +579,28 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
         return query.list();
     }
 
+	@Override
+	public ActionHttp getActionHttp(int actionId) {
+		 String hql = "from ActionHttp where actionId = :actionId";
+	        Query query = currentSession().createQuery(hql);
+	        query.setInteger("actionId", actionId);
+	        List<ActionHttp> actionHttps = query.list();
+	        if(actionHttps==null||actionHttps.size()!=1){
+	        	return null;
+	        }
+	        return (ActionHttp) query.list().get(0);
+	}
+
+	@Override
+	public int saveOrUpdateActionHttp(ActionHttp actionHttp) {
+		
+		if(actionHttp==null){
+			return 0;
+		}
+		
+		currentSession().saveOrUpdate(actionHttp);
+		
+		return 1;
+	}
+
 }

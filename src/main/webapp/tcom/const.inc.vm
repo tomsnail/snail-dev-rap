@@ -77,7 +77,7 @@
 })
 #set($testerUrl = {
     "pageTester":"$projectContext/tester/pageTester.do",
-     "pageHttpTester":"$projectContext/tester/pageHttpTester.do"
+    "pageHttpTester":"$projectContext/tester/getActionHttpInfo.do"
 })
 #set($teamUrl = {
     "teams" : "$projectContext/org/team/teams.do",

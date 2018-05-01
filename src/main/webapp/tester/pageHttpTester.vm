@@ -3,7 +3,7 @@
     #parse('/tcom/template.rap.vm')
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>RAP - $!utils.escapeInH($page.name)控制台</title>
+    <title>RAP - 控制台</title>
     <link rel="shortcut icon" href="${staticRoot}/img/favicon.ico">
 
     #includeNewRapStatic
@@ -12,56 +12,143 @@
     <script src="${staticRoot}/js/util/jsformat.js"></script>
     <script src="${staticRoot}/js/util/structureValidator.js"></script>
     <script src="${staticRoot}/js/util/mock-min.js"></script>
+    
+    <style>
+    
+    	textarea
+		{
+		margin:0;
+		padding:0;
+		width:100%;
+		box-sizing:border-box; 
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-o-box-sizing:border-box; 
+		}
+    
+    </style>
 </head>
 <body>
+   <script type="text/javascript">
+   
+   function Trim(str,is_global)
+  {
+   var result;
+   result = str.replace(/(^\s+)|(\s+$)/g,"");
+   if(is_global.toLowerCase()=="g")
+   {
+    result = result.replace(/\s/g,"");
+    }
+   return result;
+}
+   
+   	function httpUrlTest(){
+	
+	var requestUrl = $('#requestUrl').val();
+	var q = "requestUrl=" + requestUrl;
+	var requestContext = $('#requestContext').val();
+	q = q+"&requestContext="+requestContext;
+	$.ajax({
+        method : "POST",
+        url : "$projectContext/tester/httptest.do",
+        data : q,
+        success : function() {
+            var r = arguments[0];
+    		$('#responseContext').html(r);
+        }
+    });
+    }
+    
+    function saveActionHttp(type){
+    
+    var q = "";
+    
+    if(type=="url"){
+    	var requestUrl = $('#requestUrl').val();
+    	q = "requestUrl=" + requestUrl;
+    }
+    if(type=="req"){
+    	var requestContext = $('#requestContext').val();
+    	q = "requestContext=" + Trim(requestContext,"g");
+    }
+    if(type=="res"){
+    	var responseContext = $('#responseContext').text();
+    	q = "responseContext=" + Trim(responseContext,"g");
+    }
+    var actionId = $('#actionId').val();
+    q = q +"&type="+type+"&actionId="+actionId;
+	
+	$.ajax({
+        method : "POST",
+        url : "$projectContext/tester/saveOrUpdateActionHttp.do",
+        data : q,
+        success : function() {
+            var r = arguments[0];
+    		alert("ok");
+        }
+    });
+    }
+    
+     function jsJsonFormat(){
+     	var requestContext = $('#requestContext').val();
+     	var q = "requestContext=" + Trim(requestContext,"g");
+     	$.ajax({
+        method : "POST",
+        url : "$projectContext/tester/jsJsonFormat.do",
+        data : q,
+        success : function() {
+            var r = arguments[0];
+    		$('#requsetContextHtml').html(r);
+        }
+    });
+     }
+   </script>
+
 #bodyNewStart
 <div class="container">
     <h3>
         <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
-        HTTP测试台
+         $!utils.escapeInH($actionName):$!utils.escapeInH($actionVersion) &nbsp;测试台
     </h3>
 
    
     <div id="divActionList" class="demo tabs">
         <ul class="nav nav-tabs" role="tablist">
-            #foreach($action in $page.actionList)
-                <li#if($velocityCount==1) class="active"#end>
-                    <a href="#action${action.id}" role="tab" data-toggle="tab">$utils.escapeInH($action.name)</a>
-                </li>
-            #end
+            <li class="active">
+                   
+            </li>
         </ul>
-        <div class="tab-content">
-           <div class="tab-pane active" id="action0">
-                    <form name="httpTest" class="form" method="post"
-                          path="" onsubmit="return false;">
-                        <input type="hidden" name="paramIdList" class="paramIdList"
-                               value="$!utils.escapeInH($action.remarks)"/>
-
+        
+    </div>
+ <form name="httpTest" class="form" method="post"
+                          path="$projectContext/project/saveOrUpdateActionHttp.do" onsubmit="return false;">
+                        <input type="hidden" name="actionId" id="actionId" class="paramIdList"
+                               value="$actionId" />
                         <div class="p8">
                             <div style="margin-top:5px;">请求地址: 
-                            	<input name="httpUrl" class="paramIdList"/>
-                            	<input type="button" class="btn btn-primary btn-run" value="请求"/>
-                            	<div class="block" id="divResBoard">
-    								<textarea id="reqStr">HTTP Request</textarea>
-        							<div class="clear"></div>
-    							</div>
+                            	<input id="requestUrl" name="requestUrl" maxlength="1000" size="100"  value="$!utils.escapeInH($actionHttp.requestUrl)"/>
+                            	<button onclick="httpUrlTest();" class="btn btn-primary btn-run">请求</button>
+                            	<div class="clear"></div>
+                            	
+                            	<input type="button" onclick="saveActionHttp('url');" class="btn btn-primary btn-run" value="保存URL"/>
                              </div>
                         </div>
+                        <div class="block" id="divResBoard">
+    						<textarea id="requestContext" name="requestContext" >$!utils.escapeInH($actionHttp.requestContext)</textarea>
+        					<div class="clear"></div>
+        					<input type="button" onclick="jsJsonFormat();" class="btn btn-primary btn-run" value="格式化"/>
+        					<div class="clear"></div>
+        					<div id="requsetContextHtml" name="requsetContextHtml">$requsetContextHtml</div>
+                            <div class="clear"></div>
+        					<input type="button" onclick="saveActionHttp('req');" class="btn btn-primary btn-run" value="保存数据"/>
+    					</div>
+                        <div class="block" id="divResBoard">
+        					<div id="responseContext" name="responseContext">$actionHttp.responseContext</div>
+        					<div class="clear"></div>
+        					<input type="button" onclick="saveActionHttp('res');" class="btn btn-primary btn-run" value="保存数据"/>
+    					</div>
                     </form>
-                </div>
-        </div>
-    </div>
-
-    <div class="block" id="divResBoard">
-        <div id="divResBoardJson">HTTP Response</div>
-        <div class="clear"></div>
-    </div>
-    <script>
-        var RAP_ROOT = '$consts.DOMAIN_URL$!projectContext/mockjs/$!projectId';
-        document.getElementById("txtRootPath").value = RAP_ROOT;
-        var PROJECT_ID = $!projectId;
-    </script>
-    <script src="./pageTester.js"></script>
+   
 </div>
 #bodyEnd
 <foot>

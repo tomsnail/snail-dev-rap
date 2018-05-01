@@ -85,6 +85,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="mappingResources">
             <list>
                 <value>com/taobao/rigel/rap/project/mapping/Project.hbm.xml</value>
+                <value>com/taobao/rigel/rap/project/mapping/ActionHttp.hbm.xml</value>
                 <value>com/taobao/rigel/rap/project/mapping/Module.hbm.xml</value>
                 <value>com/taobao/rigel/rap/project/mapping/Page.hbm.xml</value>
                 <value>com/taobao/rigel/rap/project/mapping/Action.hbm.xml</value>
@@ -104,8 +105,8 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
             <props>
                 <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
