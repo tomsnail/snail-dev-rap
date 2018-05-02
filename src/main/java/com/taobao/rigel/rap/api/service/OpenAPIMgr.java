@@ -40,4 +40,6 @@ public interface OpenAPIMgr {
      * @return JSON, contains isOk/msg properties
      */
     String resetMockRules(int actionId);
+    
+
 }

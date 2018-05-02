@@ -188,4 +188,6 @@ public interface ProjectDao {
     ActionHttp getActionHttp(int actionId);
     
     int saveOrUpdateActionHttp(ActionHttp actionHttp);
+    
+    Action getActionByUrlAndVersion(String url,String version);
 }

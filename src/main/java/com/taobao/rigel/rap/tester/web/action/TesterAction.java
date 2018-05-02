@@ -2,6 +2,7 @@ package com.taobao.rigel.rap.tester.web.action;
 
 import com.taobao.rigel.rap.common.base.ActionBase;
 import com.taobao.rigel.rap.common.utils.JsonFormatUtils;
+import com.taobao.rigel.rap.common.utils.OkhttpRequest;
 import com.taobao.rigel.rap.organization.service.OrganizationMgr;
 import com.taobao.rigel.rap.project.bo.Action;
 import com.taobao.rigel.rap.project.bo.ActionHttp;
@@ -25,6 +26,7 @@ public class TesterAction extends ActionBase {
     private String requsetContextHtml;
     private ActionHttp actionHttp;
     private String type;
+    private String urlType;
     
     private String actionName;
     private String actionVersion;
@@ -191,6 +193,16 @@ public class TesterAction extends ActionBase {
 	public void setRequsetContextHtml(String requsetContextHtml) {
 		this.requsetContextHtml = requsetContextHtml;
 	}
+	
+	
+
+	public String getUrlType() {
+		return urlType;
+	}
+
+	public void setUrlType(String urlType) {
+		this.urlType = urlType;
+	}
 
 	public String getActionHttpInfo() {
 		ActionHttp _actionHttp =  projectMgr.getActionHttp(getActionId());
@@ -230,8 +242,25 @@ public class TesterAction extends ActionBase {
 	}
 	
 	public String httptest(){
-		System.out.println(getRequestUrl());
-		setJson("1232435");
+		String url = getRequestUrl();
+		String params = getRequestContext();
+		if(params!=null){
+			params = params.replaceAll(" ","").replace("\n", "");
+		}
+		String response = "";
+		if("post".equalsIgnoreCase(urlType)){
+			if(url.startsWith("https")){
+				response = OkhttpRequest.postHttps(url, params);
+			}else if(url.startsWith("http")){
+				response = OkhttpRequest.post(url, params);
+			}
+		}
+		if("get".equalsIgnoreCase(urlType)){
+			response = OkhttpRequest.get(url);
+		}
+		
+		
+		setJson(JsonFormatUtils.formatJson(response));
 		return SUCCESS;
 	}
 }

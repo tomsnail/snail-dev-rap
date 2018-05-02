@@ -17,6 +17,7 @@ import com.taobao.rigel.rap.project.dao.ProjectDao;
 import com.taobao.rigel.rap.project.service.ProjectMgr;
 import com.taobao.rigel.rap.workspace.bo.CheckIn;
 import com.taobao.rigel.rap.workspace.dao.WorkspaceDao;
+
 import sun.misc.Cache;
 
 import javax.management.Query;
@@ -531,6 +532,21 @@ public class ProjectMgrImpl implements ProjectMgr {
 		}
 		
 		return projectDao.saveOrUpdateActionHttp(_actionHttp);
+	}
+
+	@Override
+	public String getActionHttpResponse(String url,String version) {
+		
+		Action action = projectDao.getActionByUrlAndVersion(url, version);
+		if(action!=null){
+			ActionHttp actionHttp = projectDao.getActionHttp(action.getId());
+			if(actionHttp!=null){
+				return actionHttp.getResponseContext();
+			}
+		}
+		
+		
+		return null;
 	}
 
 

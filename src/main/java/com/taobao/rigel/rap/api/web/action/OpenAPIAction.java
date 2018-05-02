@@ -174,5 +174,11 @@ public class OpenAPIAction extends ActionBase {
         setJson(json);
         return SUCCESS;
     }
+    
+    
+    
+    public String getActionMock(){
+    	return SUCCESS;
+    }
 
 }

@@ -687,16 +687,28 @@ function deepCopy(o) {
     /**
      * add new action
      */
-    p.addAction = function(obj, addExisted, isCopy) {
+    p.addAction = function(obj, addExisted, isCopy,requestParameterList,responseParameterList) {
         obj = deepCopy(obj);
         if (isCopy) {
-            obj.name += '-副本';
+            obj.name += '';
         }
         var oldId = obj.id;
         obj.id = this.generateId();
         if (!addExisted || addExisted === 'mount') {
-            obj.requestParameterList = [];
-            obj.responseParameterList = [];
+        	
+        	
+        	if(requestParameterList){
+        		obj.requestParameterList = requestParameterList;
+        	}else{
+        		obj.requestParameterList = [];
+        	}
+        	if(responseParameterList){
+        		obj.responseParameterList = responseParameterList;
+        	}else{
+        		 obj.responseParameterList = [];
+        	}
+            
+           
             /**
             if (addExisted === 'mount') {
                 obj.requestType = '99';
@@ -2250,8 +2262,26 @@ function deepCopy(o) {
         setActionStruct(action, struct);
 
 
+        var req = [{"id":ws.generateId(),"identifier":"body","name":"数据对象","remark":"","validator":"","dataType":"object","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"command","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"fingerprint","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"sequenceID","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"version","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"uri","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"key","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                 {"id":ws.generateId(),"identifier":"timestrap","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]}];
+       
+        var res = [{"id":ws.generateId(),"identifier":"body","name":"某响应参数","remark":"","validator":"","dataType":"object","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"code","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"command","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"fingerprint","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"msg","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"msgCode","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"sequenceID","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                   {"id":ws.generateId(),"identifier":"status","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]}];
+        
         // update model
-        var id = p.addAction(action);
+        var id = p.addAction(action,undefined,undefined,req,res);
 
         // update the current model tree
         updateCurMTree();
@@ -2370,7 +2400,21 @@ function deepCopy(o) {
                 if (obj.isOk) {
                     storeViewState();
                     if (obj.projectData.moduleList.length === 0) {
-                        obj.projectData.moduleList = [{"id":ws.generateId(),"name":"某模块（点击编辑后双击修改）","introduction":"","pageList":[{"moduleId":ws.generateId(),"name":"某接口","introduction":"","id":ws.generateId(),"isIdGenerated":true,"actionList":[{"pageId":ws.generateId(),"name":"某版本","requestType":"1","requestUrl":"","responseTemplate":"","description":"","id":ws.generateId(),"requestParameterList":[{"id":ws.generateId(),"identifier":"reqParam","name":"某请求参数","remark":"","validator":"","dataType":"number","parameterList":[]}],"responseParameterList":[{"id":ws.generateId(),"identifier":"resParam","name":"某响应参数","remark":"","validator":"","dataType":"number","parameterList":[]}]}]}]}];
+                        obj.projectData.moduleList = [{"id":ws.generateId(),"name":"某模块（点击编辑后双击修改）","introduction":"","pageList":[{"moduleId":ws.generateId(),"name":"某接口","introduction":"","id":ws.generateId(),"isIdGenerated":true,"actionList":[{"pageId":ws.generateId(),"name":"某版本","requestType":"1","requestUrl":"","responseTemplate":"","description":"","id":ws.generateId(),"requestParameterList":[{"id":ws.generateId(),"identifier":"body","name":"数据对象","remark":"","validator":"","dataType":"object","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"command","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"fingerprint","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"sequenceID","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"version","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"uri","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"key","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                  {"id":ws.generateId(),"identifier":"timestrap","name":"数据对象","remark":"","validator":"","dataType":"string","parameterList":[]}],"responseParameterList":[{"id":ws.generateId(),"identifier":"body","name":"某响应参数","remark":"","validator":"","dataType":"object","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"code","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"command","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"fingerprint","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"msg","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"msgCode","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"sequenceID","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]},
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {"id":ws.generateId(),"identifier":"status","name":"某响应参数","remark":"","validator":"","dataType":"string","parameterList":[]}]}]}]}];
                     }
                     if (_draftData) {
                         obj = JSON.parse(_draftData);
@@ -3941,7 +3985,14 @@ function deepCopy(o) {
                 for (var j = 0; j < actionListNum; j++) {
                     var action = actionList[j];
                     str += "<div id=\"div-a-tree-node-" + action.id + "\">" + "<a href=\"#\" onclick=\"ws.switchA(" + action.id +
-                        "); return false;\" ondblclick=\"ws.editA(" + action.id + "); return false;\">" + util.escaper.escapeInH(action.version) + "</a>";
+                        "); return false;\" ondblclick=\"ws.editA(" + action.id + "); return false;\">" ;
+                    
+                    if(action.version){
+                    	str += util.escaper.escapeInH(action.version) + "</a>";
+                    }else{
+                    	str += util.escaper.escapeInH(action.name) + "</a>";
+                    }
+                    
                     if (_isEditMode) {
                         str += "<a href=\"#\" class=\"edit-link\" onclick=\"ws.editA(" +
                             action.id + "); return false;\"><i class=\"glyphicon glyphicon-pencil\"></i><a href=\"#\" onclick=\"ws.removeA(" +

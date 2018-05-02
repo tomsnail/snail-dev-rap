@@ -8,6 +8,7 @@ import com.taobao.rigel.rap.common.utils.StringUtils;
 import com.taobao.rigel.rap.common.utils.URLUtils;
 import com.taobao.rigel.rap.project.bo.*;
 import com.taobao.rigel.rap.project.dao.ProjectDao;
+
 import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -601,6 +602,12 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 		currentSession().saveOrUpdate(actionHttp);
 		
 		return 1;
+	}
+
+	@Override
+	public Action getActionByUrlAndVersion(String url, String version) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

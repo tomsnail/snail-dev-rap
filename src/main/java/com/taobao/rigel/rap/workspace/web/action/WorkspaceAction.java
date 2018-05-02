@@ -266,7 +266,7 @@ public class WorkspaceAction extends ActionBase {
     public String myWorkspace() {
         if (!isUserLogined()) {
             plsLogin();
-            setRelativeReturnUrl("/workspace/myWorkspace.do?projectId="
+            setRelativeReturnUrl("/RAP/workspace/myWorkspace.do?projectId="
                     + projectId);
             return LOGIN;
         }

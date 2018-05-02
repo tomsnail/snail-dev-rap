@@ -43,11 +43,11 @@
 }
    
    	function httpUrlTest(){
-	
+	var urlType = $("#urlType").val();  
 	var requestUrl = $('#requestUrl').val();
 	var q = "requestUrl=" + requestUrl;
 	var requestContext = $('#requestContext').val();
-	q = q+"&requestContext="+requestContext;
+	q = q+"&requestContext="+requestContext+"&urlType="+urlType;
 	$.ajax({
         method : "POST",
         url : "$projectContext/tester/httptest.do",
@@ -127,6 +127,10 @@
                         <div class="p8">
                             <div style="margin-top:5px;">请求地址: 
                             	<input id="requestUrl" name="requestUrl" maxlength="1000" size="100"  value="$!utils.escapeInH($actionHttp.requestUrl)"/>
+                            	<select name="urlType" id="urlType">
+  									<option value ="POST">POST</option>
+  									<option value ="GET">GET</option>
+								</select>
                             	<button onclick="httpUrlTest();" class="btn btn-primary btn-run">请求</button>
                             	<div class="clear"></div>
                             	
