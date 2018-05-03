@@ -274,7 +274,7 @@ $(function () {
         return '"' + name + '"';
     }
 
-    var notifyTmpl = '<span class="label label-{{style}}">{{text}}</span> {{targetUser.name}} {{operate}}了项目 <a href="$projectContext/workspace/myWorkspace.action?projectId={{param1}}" target="_blank">{{param2}}</a> <span class="pull-right" style="color: #AAA;">({{createTimeStr}})</span>';
+    var notifyTmpl = '<span class="label label-{{style}}">{{text}}</span> {{targetUser.name}} {{operate}}了项目 <a href="'+ProjectContext+'/workspace/myWorkspace.action?projectId={{param1}}" target="_blank">{{param2}}</a> <span class="pull-right" style="color: #AAA;">({{createTimeStr}})</span>';
 
     function renderNotification(obj) {
         if (obj.typeId == 1) {
@@ -332,7 +332,7 @@ $(function () {
             $(this).parents('li').toggleClass('open');
         })
         con.find('.set-btn').click(function () {
-            window.location.href = '/account/mySetting.action';
+            window.location.href = ProjectContext+'/account/mySetting.action';
         })
 
         con.delegate('button.close', 'click', function (e) {

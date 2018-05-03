@@ -5,7 +5,7 @@
     <title>RAP Dashboard</title>
     #parse('/tcom/template.rap.vm')
     #includeNewRapStatic
-    <link rel="shortcut icon" href="/stat/img/favicon.ico">
+    <link rel="shortcut icon" href="${staticRoot}/img/favicon.ico">
     <script type="text/javascript" src="${staticRoot}/highcharts/js/highcharts.js"></script>
     <script type="text/javascript" src="${staticRoot}/js/util/dateFormat.min.js"></script>
     <script type="text/javascript" src="log.js"></script>
