@@ -28,6 +28,9 @@ public class TesterAction extends ActionBase {
     private String type;
     private String urlType;
     
+    private String content;
+    private String pattern;
+    
     private String actionName;
     private String actionVersion;
     
@@ -217,6 +220,11 @@ public class TesterAction extends ActionBase {
 		actionName = action.getName();
 		actionVersion = action.getVersion();
 		actionId = action.getId();
+		
+		if(actionHttp.getRequestUrl()==null||actionHttp.getRequestUrl().equals("")){
+			actionHttp.setRequestUrl(action.getRequestUrl());
+		}
+		
 		return SUCCESS;
 	}
 
@@ -263,4 +271,42 @@ public class TesterAction extends ActionBase {
 		setJson(JsonFormatUtils.formatJson(response));
 		return SUCCESS;
 	}
+	
+	public String testapi(){
+		
+		String url = getPattern().split("\\?")[0];
+		String version = "";
+		String[] _t = getPattern().split("version=");
+		if(_t.length>1){
+			version = _t[1];
+		}
+		String res = projectMgr.getActionHttpResponse(url, version);
+		System.out.println(res);
+
+		if(res==null){
+			setContent("{\"status\":\"0\"}");
+		}else{
+			setContent(res);
+		}
+		
+		return "json";
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getPattern() {
+		return pattern;
+	}
+
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
+	
+	
 }

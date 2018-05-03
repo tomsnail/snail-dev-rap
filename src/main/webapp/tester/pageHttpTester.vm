@@ -102,6 +102,61 @@
         }
     });
      }
+     
+     function editResponseContext(){
+     
+     	var t = "2";
+     
+     	if(t=="1"){
+     	
+     	var q = "";
+     	$.ajax({
+        	method : "POST",
+        	url : "/RAP/mockapi/device/test/app?version=v0.5",
+        	data : q,
+        	success : function() {
+            	var r = arguments[0];
+            	
+    			alert(JSON.stringify(r));
+        	}
+        });
+     	
+     	}else{
+     	
+     	
+     	var editName = $('#editResponseContextButton').val();
+     	
+     	if(editName=='开始编辑'){
+     	 	$('#editResponseContextButton').val('完成编辑');
+     		$('#responseContextDiv').show();
+     	}
+     	if(editName=='完成编辑'){
+     		
+     		var responseContextEdit = $('#responseContextEdit').val();
+     		var q = "requestContext=" + Trim(responseContextEdit,"g");
+     		$.ajax({
+        		method : "POST",
+        		url : "$projectContext/tester/jsJsonFormat.do",
+        		data : q,
+        		success : function() {
+            		var r = arguments[0];
+    				$('#responseContext').html(r);
+    				$('#responseContextDiv').hide();
+    				$('#editResponseContextButton').val('开始编辑');
+    				$('#responseContextEdit').val('');
+        		}
+        	});
+     	}
+     	
+     	
+     	}
+     
+     	
+     	
+     
+     	
+     	
+     }
    </script>
 
 #bodyNewStart
@@ -147,9 +202,14 @@
         					<input type="button" onclick="saveActionHttp('req');" class="btn btn-primary btn-run" value="保存数据"/>
     					</div>
                         <div class="block" id="divResBoard">
+                        	<div id="responseContextDiv" style="display:none;">
+                        		<textarea id="responseContextEdit" name="responseContextEdit" rows="5"></textarea>
+                        	</div>
+                        	
         					<div id="responseContext" name="responseContext">$actionHttp.responseContext</div>
         					<div class="clear"></div>
         					<input type="button" onclick="saveActionHttp('res');" class="btn btn-primary btn-run" value="保存数据"/>
+        					<input id="editResponseContextButton" type="button" onclick="editResponseContext();" class="btn btn-primary btn-run" value="开始编辑"/>
     					</div>
                     </form>
    

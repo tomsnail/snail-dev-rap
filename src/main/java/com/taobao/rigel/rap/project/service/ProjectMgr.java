@@ -229,6 +229,6 @@ public interface ProjectMgr {
     
     int saveOrUpdateActionHttp(ActionHttp actionHttp,String type);
     
-    String getActionHttpResponse(String url,String verion);
+    String getActionHttpResponse(String url,String version);
 
 }
