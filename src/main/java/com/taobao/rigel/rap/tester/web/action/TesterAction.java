@@ -256,18 +256,20 @@ public class TesterAction extends ActionBase {
 			params = params.replaceAll(" ","").replace("\n", "");
 		}
 		String response = "";
-		if("post".equalsIgnoreCase(urlType)){
-			if(url.startsWith("https")){
-				response = OkhttpRequest.postHttps(url, params);
-			}else if(url.startsWith("http")){
-				response = OkhttpRequest.post(url, params);
+		try {
+			if("post".equalsIgnoreCase(urlType)){
+				if(url.startsWith("https")){
+					response = OkhttpRequest.postHttps(url, params);
+				}else if(url.startsWith("http")){
+					response = OkhttpRequest.post(url, params);
+				}
 			}
+			if("get".equalsIgnoreCase(urlType)){
+				response = OkhttpRequest.get(url);
+			}
+		} catch (Exception e) {
+			response = "{\"error\":\""+e.getMessage()+" "+e.getCause().getMessage()+"\"}";
 		}
-		if("get".equalsIgnoreCase(urlType)){
-			response = OkhttpRequest.get(url);
-		}
-		
-		
 		setJson(JsonFormatUtils.formatJson(response));
 		return SUCCESS;
 	}
@@ -281,7 +283,6 @@ public class TesterAction extends ActionBase {
 			version = _t[1];
 		}
 		String res = projectMgr.getActionHttpResponse(url, version);
-		System.out.println(res);
 
 		if(res==null){
 			setContent("{\"status\":\"0\"}");

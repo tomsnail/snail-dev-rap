@@ -231,7 +231,7 @@
             <tr>
                 <td class="title">接口名称</td>
                 <td class="input">
-                    <input type="text" id="editAFloater-name" minLen="1" message="请求名称不能为空" maxlength="50" disabled="disabled"/>
+                    <input type="text" id="editAFloater-name" minLen="1" message="请求名称不能为空" maxlength="50" />
                 </td>
             </tr>
             <tr>
