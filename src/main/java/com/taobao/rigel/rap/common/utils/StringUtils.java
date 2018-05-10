@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  *
  * @author Junquan 2010.01.20
  */
-public class StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils{
 
     public static final String NAME_FORMAT_WARN_MSG = "名字必须由数字/字母/汉子/空格/下划线组成,长度" + SystemConstant.NAME_LENGTH_MIN + "-" + SystemConstant.NAME_LENGTH_MAX + ".";
     public static final String ACCOUNT_FORMAT_WARN_MSG = "账户必须由数字/字母/下划线组成,长度" + SystemConstant.ACCOUNT_LENGTH_MIN + "-" + SystemConstant.ACCOUNT_LENGTH_MAX + ".";

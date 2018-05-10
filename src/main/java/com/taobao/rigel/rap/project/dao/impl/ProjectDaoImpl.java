@@ -607,18 +607,24 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 	@Override
 	public Action getActionByUrlAndVersion(String url, String version) {
 		
-		if(org.apache.commons.lang3.StringUtils.isBlank(url)){
+		if(StringUtils.isBlank(url)){
 			return null;
 		}
 		
-		if(org.apache.commons.lang3.StringUtils.isBlank(version)){
-			version = "v0.0.1";
+		String hql = "";
+		 Query query = null;
+		if(StringUtils.isBlank(version)){
+			hql = "from Action where requestUrl = :requestUrl order by version desc";
+			query = currentSession().createQuery(hql);
+		}else{
+			hql = "from Action where requestUrl = :requestUrl and version = :version order by version desc";
+			query = currentSession().createQuery(hql);
+			query.setString("version", version);
 		}
-		
-		String hql = "from Action where requestUrl = :requestUrl and version = :version";
-        Query query = currentSession().createQuery(hql);
+		if(query==null){
+			return null;
+		}
         query.setString("requestUrl", url);
-        query.setString("version", version);
         List<Action> actionHttps = query.list();
         if(actionHttps==null||actionHttps.size()!=1){
         	return null;
